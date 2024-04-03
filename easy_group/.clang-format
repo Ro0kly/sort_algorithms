@@ -1,0 +1,6 @@
+ColumnLimit: 120
+Cpp11BracedListStyle: false
+IndentWidth: 4
+Standard: Auto
+TabWidth: 4
+UseTab: ForIndentation
