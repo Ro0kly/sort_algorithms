@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 void print_array(int n, int arr[n]) {
     for (int i = 0; i < n; i++) {
@@ -10,10 +12,25 @@ void print_array(int n, int arr[n]) {
     }
 }
 
+int get_random(int lower, int upper) {
+	int num = (rand() % (upper - lower + 1)) + lower;
+	return num;
+}
+
 int main() {
-    const int n = 10;
-    int array[n] = {15, 2 , 33, 81, 4, 1, 5, 0, 89 ,102};
+	srand(time(0));
+	const int n = get_random(10, 10);
+	int array[n];
+	for (int i = 0; i < n; i++) {
+		array[i] = get_random(0, 100);
+	}
+
+    array[4] = 500;
+    array[500] = 4;
     int middle = n / 2;
+
+    clock_t time;
+	time = clock();
 
     while (middle > 0) {
         for (int i = 0; i < n - middle; i++) {
@@ -27,7 +44,11 @@ int main() {
         }
         middle /= 2;
     }
-
-    print_array(n, array);
+	time = clock() - time;
+	printf("--------------------\n");
+	printf("Result: ");
+	print_array(n, array);
+	printf("Time of produce (sec): %f\n", (double)time / CLOCKS_PER_SEC);
+	printf("--------------------");
     return 0;
 }

@@ -17,30 +17,28 @@ int get_random(int lower, int upper) {
 	return num;
 }
 
-void sort(int n, int *arr) {
-	int i = 0;
-	int j = n - 1;
-	int pivot = arr[n / 2];
-	do {
-		while (arr[i] < pivot) {
-			i++;
-		}
-		while (arr[j] > pivot) {
-			j--;
-		}
-		if (i <= j) {
-			int buff = arr[i];
-			arr[i] = arr[j];
-			arr[j] = buff;
-			i++;
-			j--;
-		}
-	} while (i <= j);
-	if (j > 0) {
-		sort(j + 1, &arr[0]);
+void sort(int n, int l, int r, int a[n]) {
+	if (l == r) {
+		return;
 	}
-	if (i < n) {
-		sort(n - i, &arr[i]);
+	int mid = (l + r) / 2;
+
+	sort(n, l, mid, a);
+	sort(n, mid + 1, r, a);
+	int i = l;
+	int j = mid + 1;
+	int buff[r];
+	for (int step = 0; step < r - l + 1; step++) {
+		if ((j > r) || ((i <= mid) && (a[i] < a[j]))) {
+			buff[step] = a[i];
+			i++;
+		} else {
+			buff[step] = a[j];
+			j++;
+		}
+	}
+	for (int step = 0; step < r - l + 1; step++) {
+		a[l + step] = buff[step];
 	}
 }
 
@@ -52,13 +50,10 @@ int main() {
 		array[i] = get_random(0, 100);
 	}
 
-	array[4] = 500;
-	array[500] = 4;
-
 	clock_t time;
 	time = clock();
 
-	sort(n, array);
+	sort(n, 0, n - 1, array);
 
 	time = clock() - time;
 	printf("--------------------\n");
@@ -66,5 +61,4 @@ int main() {
 	print_array(n, array);
 	printf("Time of produce (sec): %f\n", (double)time / CLOCKS_PER_SEC);
 	printf("--------------------");
-	return 0;
 }

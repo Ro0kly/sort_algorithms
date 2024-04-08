@@ -19,12 +19,12 @@ int get_random(int lower, int upper) {
 
 int main() {
 
-	srand(time(0));
-	const int n = get_random(100, 100);
+	const int n = get_random(10, 10);
 	int array[n];
 	for (int i = 0; i < n; i++) {
 		array[i] = get_random(0, 100);
 	}
+    
     clock_t time;
 	time = clock();
 
